@@ -1,6 +1,6 @@
 #include "util.h"
 
-std::string cleanInput(std::string inputStr) {
+std::string CleanInput(std::string inputStr) {
 	std::map<char, std::string> htmlEntities = {
         {'&', "&amp;"},
         {';', "&#59;"},
@@ -24,7 +24,7 @@ std::string cleanInput(std::string inputStr) {
 	return inputStr;
 }
 
-std::string decodeHTMLEntities(std::string inputStr) {
+std::string DecodeHTMLEntities(std::string inputStr) {
 	std::map<std::string, char> htmlEntities = {
         {"&amp;", '&'},
         {"&#59;", ';'},

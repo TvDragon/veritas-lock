@@ -5,8 +5,8 @@
 #include <map>
 #include <sstream>
 
-std::string cleanInput(std::string inputStr);
+std::string CleanInput(std::string inputStr);
 
-std::string decodeHTMLEntities(std::string inputStr);
+std::string DecodeHTMLEntities(std::string inputStr);
 
 #endif
