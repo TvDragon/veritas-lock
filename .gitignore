@@ -1,0 +1,25 @@
+# OSX artifacts
+.DS_Store
+
+# Dear ImGui artifacts
+imgui.ini
+imgui*.ini
+
+# Database
+*.db
+
+# Logins in JSON file
+*.json
+
+# Log files
+*.log
+
+# General build artifacts
+*.o
+*.obj
+*.so
+*.d
+*.exe
+
+# Executables
+veritas-lock
