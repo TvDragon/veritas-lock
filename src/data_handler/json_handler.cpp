@@ -1,10 +1,6 @@
 #include "json_handler.h"
 
-JSONHandler::JSONHandler() {}
-
-JSONHandler::~JSONHandler() {}
-
-void JSONHandler::ReadFile(const std::string filename,
+void ReadFile(const std::string filename,
 							std::vector<std::vector<std::string>>& logins,
 							std::vector<std::string>& failedReadLogins) {
 	std::ifstream file(filename);
@@ -74,7 +70,7 @@ void JSONHandler::ReadFile(const std::string filename,
 	json_object_put(jsonArrayContents);
 }
 
-bool JSONHandler::WriteToFile(const std::string filename, const std::vector<std::map<std::string, std::string>> allLogins) {
+bool WriteToFile(const std::string filename, const std::vector<std::map<std::string, std::string>> allLogins) {
 	struct json_object *jsonArray = json_object_new_array();
 	int numLogins = allLogins.size();
 	
@@ -99,7 +95,7 @@ bool JSONHandler::WriteToFile(const std::string filename, const std::vector<std:
     if (file != NULL) {
         fprintf(file, "%s", jsonString);
         fclose(file);
-        printf("JSON Array written to file successfully.\n");
+        std::cout << "JSON Array written to file successfully." << std::endl;
     } else {
         perror("Failed to open file");
 		return false;
