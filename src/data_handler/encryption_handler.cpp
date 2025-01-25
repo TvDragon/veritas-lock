@@ -2,9 +2,11 @@
 
 EncryptionHandler::EncryptionHandler()
 	:filename("key_iv.bin")
-	, key(RAND_bytes(key.data(), key.size()))
-	, iv(RAND_bytes(iv.data(), iv.size()))
 {
+    // Set the sizes for the key and IV before using them
+    key.resize(AES_KEY_SIZE);
+    iv.resize(AES_BLOCK_SIZE);
+
 	if (!RAND_bytes(key.data(), key.size()) || !RAND_bytes(iv.data(), iv.size())) {
         std::cerr << "Error generating random key/IV." << std::endl;
     }

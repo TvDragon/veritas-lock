@@ -13,7 +13,7 @@
 #include <fstream>
 #include <stdexcept>
 
-static const int AES_KEY_SIZE = 256;  // 256-bit key
+static const int AES_KEY_SIZE = 32;  // 256-bit key
 static const int AES_BLOCK_SIZE = 16; // AES block size (128 bits)
 
 class EncryptionHandler {
