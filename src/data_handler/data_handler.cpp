@@ -244,7 +244,7 @@ void DataHandler::GetUpdatedTrashColumnNames() {
 
 	resultsContext.trashColNames.clear();
 	for (int i = 0; i < tempColumnNames.size(); i++) {
-		resultsContext.trashColNames.push_back(DecodeHTMLEntities(ptrEncryptionHandler->DecryptMessage(tempColumnNames[i])));
+		resultsContext.trashColNames.push_back(tempColumnNames[i]);
 	}
 
 	tempColumnNames.clear();
