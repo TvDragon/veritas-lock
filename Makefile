@@ -10,14 +10,18 @@ EXE = veritas-lock
 SRC_DIR = src/
 DATA_HANDLER_DIR = $(SRC_DIR)data_handler/
 IMGUI_DIR = $(SRC_DIR)imgui/
+VIEW_DIR = $(SRC_DIR)view/
 SOURCES = $(wildcard $(SRC_DIR)*.cpp)
 DATA_HANDLER_SOURCES = $(wildcard $(DATA_HANDLER_DIR)*.cpp)
 IMGUI_SOURCES = $(wildcard $(IMGUI_DIR)*.cpp)
+VIEW_SOURCES = $(wildcard $(VIEW_DIR)*.cpp)
 OBJS = $(SOURCES:.cpp=.o)
 DATA_HANDLER_OBJS = $(DATA_HANDLER_SOURCES:.cpp=.o)
 IMGUI_OBJS = $(IMGUI_SOURCES:.cpp=.o)
+VIEW_OBJS = $(VIEW_SOURCES:.cpp=.o)
 DATA_HANDLER_SHARED_OBJS = $(DATA_HANDLER_OBJS:.o=.so)
 IMGUI_SHARED_OBJS = $(IMGUI_OBJS:.o=.so)
+VIEW_SHARED_OBJS = $(VIEW_OBJS:.o=.so)
 X64 = x64/
 
 CXX = g++
@@ -49,7 +53,7 @@ all: $(EXE)
 	@echo Build complete for $(UNAME_S)
 
 %.o: %.cpp
-	$(CXX) $(CXX_FLAGS) $(DATA_HANDLER_FLAGS) -c -fPIC -o $@ $<
+	$(CXX) $(CXX_FLAGS) $(DATA_HANDLER_FLAGS) $(IMGUI_FLAGS) -c -fPIC -o $@ $<
 
 $(DATA_HANDLER_DIR)%.o: $(DATA_HANDLER_DIR)%.cpp
 	$(CXX) $(CXX_FLAGS) $(DATA_HANDLER_FLAGS) -c -fPIC -o $@ $<
@@ -57,13 +61,19 @@ $(DATA_HANDLER_DIR)%.o: $(DATA_HANDLER_DIR)%.cpp
 $(IMGUI_DIR)%.o: $(IMGUI_DIR)%.cpp
 	$(CXX) $(CXX_FLAGS) $(IMGUI_FLAGS) -c -fPIC -o $@ $<
 
+$(VIEW_DIR)%.o: $(VIEW_DIR)%.cpp
+	$(CXX) $(CXX_FLAGS) $(DATA_HANDLER_FLAGS) $(IMGUI_FLAGS) -c -fPIC -o $@ $<
+
 $(X64)libdata_handler.so: $(X64) $(DATA_HANDLER_OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -o $@ $(DATA_HANDLER_OBJS)
 
 $(X64)libimgui.so: $(X64) $(IMGUI_OBJS)
 	$(CXX) $(CXX_FLAGS) -shared -o $@ $(IMGUI_OBJS)
 
-$(EXE): $(OBJS) $(X64)libdata_handler.so $(X64)libimgui.so
+$(X64)libview.so: $(X64) $(VIEW_OBJS)
+	$(CXX) $(CXX_FLAGS) -shared -o $@ $(VIEW_OBJS)
+
+$(EXE): $(OBJS) $(X64)libdata_handler.so $(X64)libimgui.so $(X64)libview.so
 	$(CXX) $(CXX_FLAGS) -o $@ -L$(X64) $^ $(DATA_HANDLER_FLAGS) $(IMGUI_FLAGS) $(LIBS)
 
 $(X64):
