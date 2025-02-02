@@ -48,6 +48,8 @@ int main(int argc, char** argv) {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGuiStyle& style = ImGui::GetStyle();
+	auto& colors = style.Colors;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
@@ -77,10 +79,8 @@ int main(int argc, char** argv) {
 	//IM_ASSERT(font != nullptr);
 	io.Fonts->AddFontFromFileTTF("./res/fonts/nourd_regular.ttf", 18.0f);
 
-	// Our state
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+	colors[ImGuiCol_Text] = ImColor(28, 35, 33);
 
 	// Main loop
 	bool done = false;
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 		// Rendering
 		ImGui::Render();
 		SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-		SDL_SetRenderDrawColor(renderer, (Uint8)(clear_color.x * 255), (Uint8)(clear_color.y * 255), (Uint8)(clear_color.z * 255), (Uint8)(clear_color.w * 255));
+		SDL_SetRenderDrawColor(renderer, (Uint8)(210), (Uint8)(210), (Uint8)(210), (Uint8)(255));
 		SDL_RenderClear(renderer);
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);
 		SDL_RenderPresent(renderer);

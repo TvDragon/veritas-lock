@@ -17,7 +17,10 @@ enum View {
 };
 
 struct DataContext {
-	View view;
+	View view = MAIN_VIEW;
+	std::map<std::string, std::string> selectedLogin;
+	bool isInitialEdit = false;
+	int selectedLoginIdx = -1;
 };
 
 #endif
