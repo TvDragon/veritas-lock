@@ -59,6 +59,8 @@ bool ImGui::FileDialog(bool *open, ImFileDialogInfo *dialogInfo)
 	if (!*open)
 		return false;
 
+	ImGui::PushStyleColor(ImGuiCol_Text, ImColor(210, 210, 210).Value);
+
 	static float initialSpacingColumn0 = 230.0f;
 	static float initialSpacingColumn1 = 80.0f;
 	static float initialSpacingColumn2 = 90.0f;
@@ -422,6 +424,8 @@ bool ImGui::FileDialog(bool *open, ImFileDialogInfo *dialogInfo)
 
 	ImGui::End();
 	ImGui::PopID();
+
+	ImGui::PopStyleColor();  // Restore previous color settings
 
 	return complete;
 }
