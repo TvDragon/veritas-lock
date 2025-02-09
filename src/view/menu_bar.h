@@ -2,6 +2,7 @@
 #define MENU_BAR
 
 #include "../data_handler/data_handler.h"
+#include "../data_handler/json_handler.h"
 #include "data_context.h"
 
 class MenuBar {

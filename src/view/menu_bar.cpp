@@ -84,6 +84,129 @@ void MenuBar::DisplayMenuBar() {
 	}
 	if (ImGui::FileDialog(&m_fileDialogOpen, &m_fileDialogInfo)) {
 		// Result path in: m_fileDialogInfo.resultPath
+
+		if (m_fileDialogInfo.resultPath.extension() == ".json") {
+			if (m_fileDialogInfo.type == ImGuiFileDialogType_ReadFile) {
+				std::vector<std::vector<std::string>> logins;
+				int numLogins = 0;
+				errorLogins.clear();
+				failedReadLogins.clear();
+				ReadFile(m_fileDialogInfo.resultPath, logins, failedReadLogins);
+				numLogins = logins.size();
+				for (int i = 0; i < numLogins; i++) {
+					std::string output = ptrDataHandler->AddLogin(logins[i][0],
+											logins[i][1], logins[i][2],
+											logins[i][3], logins[i][4],
+											logins[i][5], logins[i][6],
+											logins[i][7]);
+					if (!output.empty()) {
+						errorLogins.push_back(output);
+					}
+				}
+
+				logins.clear();
+
+				if (errorLogins.size() == 0 && failedReadLogins.size() == 0) {
+					ImGui::OpenPopup("Import Logins Success");
+				} else {
+					ImGui::OpenPopup("Import Logins Failed");
+				}
+			} else if (m_fileDialogInfo.type == ImGuiFileDialogType_WriteFile) {
+				std::vector<std::map<std::string, std::string>> allLogins = ptrDataHandler->GetAllLogins();
+				bool success = WriteToFile(m_fileDialogInfo.resultPath, allLogins);
+				if (success) {
+					ImGui::OpenPopup("Export Logins Success");
+				} else {
+					ImGui::OpenPopup("Export Logins Failed");
+				}
+				allLogins.clear();
+			}
+		} else {
+			ImGui::OpenPopup("Wrong File Type");
+		}
 	}
+
+	// Always center this window when appearing
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("Import Logins Success", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		std::vector<std::string> users = ptrDataHandler->GetUsers();
+		if (users.size() != 0) {
+			ptrDataHandler->SetUser(users[0]);
+		}
+		std::vector<std::string> types = ptrDataHandler->GetTypes();
+		if (types.size() != 0) {
+			ptrDataHandler->GetLogins(types[0]);
+			ptrDataContext->selectedLoginIdx = -1;
+			ptrDataContext->selectedLogin.clear();
+		}
+		ImGui::Text("Successfully Imported Logins.");
+
+		// Set button width to match modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	} else if (ImGui::BeginPopupModal("Import Logins Failed", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		std::stringstream ss;
+		if (errorLogins.size() != 0) {
+			ss << "Error occurred importing logins::\n\n";
+			for (int i = 0; i < errorLogins.size(); i++) {
+				ss << errorLogins[i] << "\n";
+			}
+		}
+		if (failedReadLogins.size() != 0) {
+			if (errorLogins.size() != 0) {
+				ss << "\n";
+			}
+			ss << "Error reading in logins:\n\n";
+			for (int i = 0; i < failedReadLogins.size(); i++) {
+				ss << failedReadLogins[i] << "\n";
+			}
+		}
+		ImGui::Text(ss.str().c_str());
+
+		// Set button width to mach modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	} else if (ImGui::BeginPopupModal("Wrong File Type", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Failed to import logins as must be JSON file type.");
+
+		// Set button width to match modal with
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}  else if (ImGui::BeginPopupModal("Export Logins Success", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Successfully Exported Logins.");
+		
+		// Set button width to match modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+		
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}  else if (ImGui::BeginPopupModal("Export Logins Failed", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Error Occurred Exporting Logins.");
+
+		// Set button width to match modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
 	ImGui::PopStyleColor(5);
 }
