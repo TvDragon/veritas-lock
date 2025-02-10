@@ -395,7 +395,10 @@ bool ImGui::FileDialog(bool *open, ImFileDialogInfo *dialogInfo)
 	}
 
 	if (ImGui::BeginPopupModal("Override File Popup", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		
+		ImGui::PushStyleColor(ImGuiCol_Text, ImColor(84, 84, 84).Value);
 		ImGui::Text("Do you wish to override this file?");
+		ImGui::PopStyleColor();
 		
 		float modalWidth = ImGui::GetContentRegionAvail().x;
 		float buttonWidth = (modalWidth - ImGui::GetStyle().ItemSpacing.x) / 2;

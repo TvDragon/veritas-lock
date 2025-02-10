@@ -36,18 +36,20 @@ void MenuBar::DisplayMenuBar() {
 			if (ImGui::BeginMenu("Users")) {
 				std::vector<std::string> users = ptrDataHandler->GetUsers();
 				for (int i = 0; i < users.size(); i++) {
-					ptrDataHandler->SetUser(users[i]);
-					std::vector<std::string> types = ptrDataHandler->GetTypes();
-					if (types.size() != 0) {
-						ptrDataHandler->SetType(types[0]);
-						ptrDataHandler->GetLogins(types[0]);
-					} else {
-						ptrDataHandler->SetType("");
-						ptrDataHandler->GetLogins("");
+					if (ImGui::MenuItem(users[i].c_str())) {
+						ptrDataHandler->SetUser(users[i]);
+						std::vector<std::string> types = ptrDataHandler->GetTypes();
+						if (types.size() != 0) {
+							ptrDataHandler->SetType(types[0]);
+							ptrDataHandler->GetLogins(types[0]);
+						} else {
+							ptrDataHandler->SetType("");
+							ptrDataHandler->GetLogins("");
+						}
+						ptrDataContext->selectedLoginIdx = -1;
+						ptrDataContext->selectedLogin.clear();
+						ptrDataContext->view = MAIN_VIEW;
 					}
-					ptrDataContext->selectedLoginIdx = -1;
-					ptrDataContext->selectedLogin.clear();
-					ptrDataContext->view = MAIN_VIEW;
 				}
 				ImGui::EndMenu();
 			}
