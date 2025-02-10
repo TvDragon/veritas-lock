@@ -4,7 +4,15 @@ DataHandler::DataHandler()
 	:ptrDBHandler(new DatabaseHandler())
 	, ptrEncryptionHandler(new EncryptionHandler())
 {
-
+	std::vector<std::string> users = GetUsers();
+	if (users.size() != 0) {
+		SetUser(users[0]);
+	}
+	std::vector<std::string> types = GetTypes();
+	if (types.size() != 0) {
+		GetLogins(types[0]);
+		SetType(types[0]);
+	}
 }
 
 DataHandler::~DataHandler() {

@@ -35,17 +35,6 @@ DatabaseHandler::DatabaseHandler()
 	} else {
 		ss << "Opened Database Successfully.\n\n";
 		dbLog->LogMessage(ss.str());
-		if (doesDBExist) {
-			std::vector<std::string> users = GetUsers();
-			if (users.size() != 0) {
-				SetUser(users[0]);
-			}
-			std::vector<std::string> types =  GetTypes();
-			if (types.size() != 0) {
-				GetLogins(types[0]);
-				SetType(types[0]);
-			}
-		}
 	}
 
 	if (!doesDBExist) {
