@@ -1,11 +1,13 @@
 #include "data_handler/data_handler.h"
 #include "view/data_context.h"
 #include "view/menu_bar.h"
+#include "view/main_view.h"
 
 int main(int argc, char** argv) {
 	DataHandler dataHandler = DataHandler();
 	DataContext dataContext;
 	MenuBar menuBar = MenuBar(&dataContext, &dataHandler);
+	MainView mainView = MainView(&dataContext, &dataHandler);
 
 	// Setup SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
@@ -111,18 +113,19 @@ int main(int argc, char** argv) {
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
 
-		if (dataContext.view != MASTER_LOGIN_VIEW) {
+		if (dataContext.view != MASTER_LOGIN_DISPLAY_VIEW) {
 			menuBar.DisplayMenuBar();
 		}
 
 		switch (dataContext.view) {
-			case MASTER_LOGIN_VIEW:
+			case MASTER_LOGIN_DISPLAY_VIEW:
 				break;
-			case MAIN_VIEW:
+			case MAIN_DISPLAY_VIEW:
+				mainView.DisplayMain();
 				break;
-			case ADD_LOGIN_VIEW:
+			case ADD_LOGIN_DISPLAY_VIEW:
 				break;
-			case TRASH_VIEW:
+			case TRASH_DISPLAY_VIEW:
 				break;
 			default:
 				break;

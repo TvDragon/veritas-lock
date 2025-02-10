@@ -28,7 +28,7 @@ void MenuBar::DisplayMenuBar() {
 						ptrDataHandler->GetLogins(types[i]);
 						ptrDataContext->selectedLoginIdx = -1;
 						ptrDataContext->selectedLogin.clear();
-						ptrDataContext->view = MAIN_VIEW;
+						ptrDataContext->view = MAIN_DISPLAY_VIEW;
 					}
 				}
 				ImGui::EndMenu();
@@ -48,18 +48,18 @@ void MenuBar::DisplayMenuBar() {
 						}
 						ptrDataContext->selectedLoginIdx = -1;
 						ptrDataContext->selectedLogin.clear();
-						ptrDataContext->view = MAIN_VIEW;
+						ptrDataContext->view = MAIN_DISPLAY_VIEW;
 					}
 				}
 				ImGui::EndMenu();
 			}
 			if (ImGui::MenuItem("Trash")) {
-				ptrDataContext->view = TRASH_VIEW;
+				ptrDataContext->view = TRASH_DISPLAY_VIEW;
 				ptrDataHandler->GetUpdatedTrashColumnNames();
 				ptrDataHandler->GetUpdatedTrashLogins();
 			}
 			if (ImGui::MenuItem("Add Login")) {
-				ptrDataContext->view = ADD_LOGIN_VIEW;
+				ptrDataContext->view = ADD_LOGIN_DISPLAY_VIEW;
 				ptrDataContext->isInitialEdit = true;
 			}
 			if (ImGui::MenuItem("Import")) {
@@ -79,7 +79,7 @@ void MenuBar::DisplayMenuBar() {
 			ImGui::EndMenu();
 		}
 		if (ImGui::MenuItem("Home")) {
-			ptrDataContext->view = MAIN_VIEW;
+			ptrDataContext->view = MAIN_DISPLAY_VIEW;
 			ptrDataContext->isInitialEdit = true;
 		}
 		ImGui::EndMainMenuBar();
