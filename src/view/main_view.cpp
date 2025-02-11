@@ -123,17 +123,24 @@ void MainView::DisplayLoginBtn(std::map<std::string, std::string> login,
 	// Get the starting position for the background rectangle
 	ImVec2 start = ImGui::GetCursorScreenPos();
 	int btnWidth = loginsSecWidth - 30;
-	int btnHeight = ImGui::CalcTextSize(loginDetails).y;
+	int btnHeight = ImGui::CalcTextSize(loginDetails).y + 3;
 	ImVec2 end = ImVec2(start.x + btnWidth, start.y + btnHeight);
 
+	// Adjust padding values
+	float paddingX = 10.0f;
+	
 	// Set background color
-	ImU32 bgColor = IM_COL32(66, 150, 250, 80); // Adjust RGBA as needed
+	ImU32 bgColor = IM_COL32(169, 180, 194, 255); // Adjust RGBA as needed
 
 	if (ptrDataContext->selectedLoginIdx == idx) {
-		bgColor = IM_COL32(250, 150, 66, 80);
+		bgColor = IM_COL32(84, 84, 84, 255);
 	}
 	// Draw the background color rectangle
 	ImGui::GetWindowDrawList()->AddRectFilled(start, end, bgColor);
+
+	// Move cursor to ensure selectable is drawn inside the padded background
+	ImGui::SetCursorScreenPos(ImVec2(start.x + paddingX, start.y));
+
 	if (ImGui::Selectable(loginDetails, false, ImGuiSelectableFlags_SpanAllColumns, ImVec2(btnWidth, 0))) {
 		// Handle button click here
 		ptrDataContext->selectedLogin["id"] = login["id"];
@@ -148,6 +155,10 @@ void MainView::DisplayLoginBtn(std::map<std::string, std::string> login,
 		ptrDataContext->selectedLoginIdx = idx;
 		ptrDataContext->subView = LOGIN_DISPLAY_VIEW;
 	}
+
+	// Restore cursor position to avoid layout issues
+	ImGui::SetCursorScreenPos(ImVec2(start.x, end.y));
+
 	if (idx != numLogins - 1) {
 		ImGui::Spacing();
 	}
@@ -302,6 +313,9 @@ void MainView::DisplayLogin(float loginSecWidth) {
 			ss << password << "\n";
 		}
 		ss << "\n";
+		ImGui::PushStyleColor(ImGuiCol_Header, ImColor(221, 221, 221).Value);		// Menu item color
+		ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImColor(169, 180, 194).Value);
+		ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImColor(84, 84, 84).Value);
 		// ImGui::Button(ss.str().c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 0));
 		ImGui::BeginChild("##accountDetails", ImVec2(ImGui::GetContentRegionAvail().x,
 							ImGui::CalcTextSize(ss.str().c_str()).y + 24), true,
@@ -386,7 +400,7 @@ void MainView::DisplayLogin(float loginSecWidth) {
 			}
 		}
 		ImGui::EndChild();
-
+		ImGui::PopStyleColor(3);
 	} else {
 		// When ptrDataContext->selectedLogin is empty, render nothing
 		ImGui::Text("No login selected.");

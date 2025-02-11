@@ -83,6 +83,14 @@ int main(int argc, char** argv) {
 
 
 	colors[ImGuiCol_Text] = ImColor(28, 35, 33);
+	colors[ImGuiCol_MenuBarBg] = ImColor(221, 221, 221);
+	colors[ImGuiCol_WindowBg] = ImColor(221, 221, 221);
+	colors[ImGuiCol_TitleBgActive] = ImColor(29, 91, 122);
+	colors[ImGuiCol_PopupBg] = ImColor(221, 221, 221);
+	colors[ImGuiCol_FrameBg] = ImColor(250, 250, 250);
+	colors[ImGuiCol_Button] = ImColor(250, 250, 250);
+	colors[ImGuiCol_ButtonHovered] = ImColor(169, 180, 194);
+	colors[ImGuiCol_ButtonActive] = ImColor(84, 84, 84);
 
 	// Main loop
 	bool done = false;
@@ -134,7 +142,7 @@ int main(int argc, char** argv) {
 		// Rendering
 		ImGui::Render();
 		SDL_RenderSetScale(renderer, io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-		SDL_SetRenderDrawColor(renderer, (Uint8)(210), (Uint8)(210), (Uint8)(210), (Uint8)(255));
+		SDL_SetRenderDrawColor(renderer, (Uint8)(221), (Uint8)(221), (Uint8)(221), (Uint8)(255));
 		SDL_RenderClear(renderer);
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer);
 		SDL_RenderPresent(renderer);

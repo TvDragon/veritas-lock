@@ -13,11 +13,9 @@ MenuBar::~MenuBar() {
 }
 
 void MenuBar::DisplayMenuBar() {
-	ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImColor(210, 210, 210).Value);	// Menu bar color
-	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImColor(210, 210, 210).Value);		// Menu (Groups) background color
-	ImGui::PushStyleColor(ImGuiCol_Header, ImColor(210, 210, 210).Value);		// Menu item color
-	ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImColor(84, 84, 84).Value);
-	ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImColor(169, 180, 194).Value);
+	ImGui::PushStyleColor(ImGuiCol_Header, ImColor(221, 221, 221).Value);		// Menu item color
+	ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImColor(169, 180, 194).Value);
+	ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImColor(84, 84, 84).Value);
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Account")) {
 			if (ImGui::BeginMenu("Groups")) {
@@ -210,5 +208,5 @@ void MenuBar::DisplayMenuBar() {
 		ImGui::EndPopup();
 	}
 
-	ImGui::PopStyleColor(5);
+	ImGui::PopStyleColor(3);
 }
