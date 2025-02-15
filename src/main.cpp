@@ -2,12 +2,14 @@
 #include "view/data_context.h"
 #include "view/menu_bar.h"
 #include "view/main_view.h"
+#include "view/add_login_view.h"
 
 int main(int argc, char** argv) {
 	DataHandler dataHandler = DataHandler();
 	DataContext dataContext;
 	MenuBar menuBar = MenuBar(&dataContext, &dataHandler);
 	MainView mainView = MainView(&dataContext, &dataHandler);
+	AddLoginView addLoginView = AddLoginView(&dataContext, &dataHandler);
 
 	// Setup SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
@@ -132,6 +134,7 @@ int main(int argc, char** argv) {
 				mainView.DisplayMain();
 				break;
 			case ADD_LOGIN_DISPLAY_VIEW:
+				addLoginView.DisplayAddLogin();
 				break;
 			case TRASH_DISPLAY_VIEW:
 				break;
