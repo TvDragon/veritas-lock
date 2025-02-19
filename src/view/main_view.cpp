@@ -82,6 +82,8 @@ void MainView::SearchBar() {
 					ptrDataHandler->SetType("");
 				}
 				ImGui::OpenPopup("Delete Group Success");
+				ptrDataContext->selectedLogin.clear();
+				ptrDataContext->selectedLoginIdx = -1;
 			} else {
 				ImGui::OpenPopup("Delete Group Fail");
 			}
@@ -230,7 +232,7 @@ void MainView::DisplayLogins(std::vector<std::map<std::string, std::string>> log
 }
 
 void MainView::DisplayLogin(float loginSecWidth) {
-	if (!ptrDataContext->selectedLogin.empty()) {
+	if (!ptrDataContext->selectedLogin.empty() && ptrDataContext->selectedLoginIdx != -1) {
 		ImGui::Text(ptrDataContext->selectedLogin["account"].c_str());
 
 		// Move cursor to the right for the buttons
@@ -258,7 +260,8 @@ void MainView::DisplayLogin(float loginSecWidth) {
 				std::string id = ptrDataContext->selectedLogin["id"];
 				bool success = ptrDataHandler->DeleteLogin(std::stoi(id), false);
 				if (success) {
-					ptrDataContext->selectedLogin.clear();	
+					ptrDataContext->selectedLogin.clear();
+					ptrDataContext->selectedLoginIdx = -1;
 					ImGui::OpenPopup("Delete Login Success");
 				} else {
 					ImGui::OpenPopup("Delete Login Failed");
