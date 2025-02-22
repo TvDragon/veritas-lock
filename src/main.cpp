@@ -1,6 +1,7 @@
 #include "data_handler/data_handler.h"
 #include "view/data_context.h"
 #include "view/menu_bar.h"
+#include "view/master_login_view.h"
 #include "view/main_view.h"
 #include "view/add_login_view.h"
 #include "view/trash_logins_view.h"
@@ -9,6 +10,7 @@ int main(int argc, char** argv) {
 	DataHandler dataHandler = DataHandler();
 	DataContext dataContext;
 	MenuBar menuBar = MenuBar(&dataContext, &dataHandler);
+	MasterLoginView masterLoginView = MasterLoginView(&dataContext, &dataHandler);
 	MainView mainView = MainView(&dataContext, &dataHandler);
 	AddLoginView addLoginView = AddLoginView(&dataContext, &dataHandler);
 	TrashLoginsView trashLoginView = TrashLoginsView(&dataContext, &dataHandler);
@@ -131,6 +133,7 @@ int main(int argc, char** argv) {
 
 		switch (dataContext.view) {
 			case MASTER_LOGIN_DISPLAY_VIEW:
+				masterLoginView.DisplayMasterLoginView();
 				break;
 			case MAIN_DISPLAY_VIEW:
 				mainView.DisplayMain();

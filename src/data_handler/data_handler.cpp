@@ -28,8 +28,10 @@ void DataHandler::AddMasterLogin(std::string password) {
 
 std::string DataHandler::GetMasterPassword() {
 	std::string masterPassword = ptrDBHandler->GetMasterPassword();
-	masterPassword = ptrEncryptionHandler->DecryptMessage(masterPassword);
-	masterPassword = DecodeHTMLEntities(masterPassword);
+	if (!masterPassword.empty()) {
+		masterPassword = ptrEncryptionHandler->DecryptMessage(masterPassword);
+		masterPassword = DecodeHTMLEntities(masterPassword);
+	}
 	return masterPassword;
 }
 

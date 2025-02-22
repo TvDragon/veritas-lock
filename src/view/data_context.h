@@ -27,7 +27,7 @@ enum SubView {
 };
 
 struct DataContext {
-	View view = MAIN_DISPLAY_VIEW;
+	View view = MASTER_LOGIN_DISPLAY_VIEW;
 	SubView subView = NO_DISPLAY_VIEW;
 	std::map<std::string, std::string> selectedLogin;
 	bool isInitialEdit = false;
