@@ -81,11 +81,11 @@ void MainView::SearchBar() {
 				} else {
 					ptrDataHandler->SetType("");
 				}
-				ImGui::OpenPopup("Delete Group Success");
+				showDeleteGroupPopupSuccess = true;
 				ptrDataContext->selectedLogin.clear();
 				ptrDataContext->selectedLoginIdx = -1;
 			} else {
-				ImGui::OpenPopup("Delete Group Fail");
+				showDeleteGroupPopupFailed = true;
 			}
 			ImGui::CloseCurrentPopup();
 		}
@@ -96,6 +96,12 @@ void MainView::SearchBar() {
 		ImGui::EndPopup();
 	}
 
+	if (showDeleteGroupPopupSuccess) {
+		ImGui::OpenPopup("Delete Group Success");
+	} else if (showDeleteGroupPopupFailed) {
+		ImGui::OpenPopup("Delete Group Fail");
+	}
+
 	if (ImGui::BeginPopupModal("Delete Group Success", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
 		ImGui::Text("Successfully Deleted Logins For Group.");
 
@@ -103,6 +109,7 @@ void MainView::SearchBar() {
 		float buttonWidth = ImGui::GetContentRegionAvail().x;
 
 		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			showDeleteGroupPopupSuccess = false;
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
@@ -113,6 +120,7 @@ void MainView::SearchBar() {
 		float buttonWidth = ImGui::GetContentRegionAvail().x;
 
 		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			showDeleteGroupPopupFailed = false;
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();
@@ -262,36 +270,14 @@ void MainView::DisplayLogin(float loginSecWidth) {
 				if (success) {
 					ptrDataContext->selectedLogin.clear();
 					ptrDataContext->selectedLoginIdx = -1;
-					ImGui::OpenPopup("Delete Login Success");
+					showDeletePopupSuccess = true;
 				} else {
-					ImGui::OpenPopup("Delete Login Failed");
+					showDeletePopupFailed = true;
 				}
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::SameLine();
 			if (ImGui::Button("NO", ImVec2(buttonWidth, 0))) {
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndPopup();
-		}
-
-		if (ImGui::BeginPopupModal("Delete Login Success", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-			ImGui::Text("Successfully Deleted Login.");
-
-			// Set button width to match modal width
-			float buttonWidth = ImGui::GetContentRegionAvail().x;
-
-			if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndPopup();
-		} else if (ImGui::BeginPopupModal("Delete Login Failed", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-			ImGui::Text("Failed To Delete Login.");
-
-			// Set button width to match modal width
-			float buttonWidth = ImGui::GetContentRegionAvail().x;
-
-			if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
@@ -407,6 +393,36 @@ void MainView::DisplayLogin(float loginSecWidth) {
 	} else {
 		// When ptrDataContext->selectedLogin is empty, render nothing
 		ImGui::Text("No login selected.");
+	}
+	
+	if (showDeletePopupSuccess) {
+		ImGui::OpenPopup("Delete Login Success");
+	} else if (showDeletePopupFailed) {
+		ImGui::OpenPopup("Delete Login Failed");
+	}
+
+	if (ImGui::BeginPopupModal("Delete Login Success", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Successfully Deleted Login.");
+
+		// Set button width to match modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			showDeletePopupSuccess = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	} else if (ImGui::BeginPopupModal("Delete Login Failed", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Failed To Delete Login.");
+
+		// Set button width to match modal width
+		float buttonWidth = ImGui::GetContentRegionAvail().x;
+
+		if (ImGui::Button("OK", ImVec2(buttonWidth, 0))) {
+			showDeletePopupFailed = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
 	}
 }
 

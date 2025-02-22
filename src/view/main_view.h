@@ -32,6 +32,10 @@ private:
 	struct DataContext* ptrDataContext;
 	DataHandler* ptrDataHandler;
 	char searchBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
+	bool showDeleteGroupPopupSuccess = false;
+	bool showDeleteGroupPopupFailed = false;
+	bool showDeletePopupSuccess = false;
+	bool showDeletePopupFailed = false;
 };
 
 #endif
