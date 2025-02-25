@@ -48,10 +48,6 @@ Note: The package manager you use will be different depending on which linux sys
 
 		./veritas-lock
 
-### Using application without compiling from source code
-
-If you wish to use this application on Linux without compiling from source code you can download it at [Linux Build](https://github.com/TvDragon/veritas-lock/releases/tag/v1.0)
-
 ## Features
 
 - Display, Edit and Delete logins

@@ -80,7 +80,7 @@ $(X64):
 	mkdir -p $(X64)
 
 clean:
-	rm -rf $(EXE) $(OBJS) $(DATA_HANDLER_OBJS) $(X64) *.d *.db *.log key_iv.bin
+	rm -rf $(EXE) $(OBJS) $(DATA_HANDLER_OBJS) $(IMGUI_OBJS) $(VIEW_OBJS) $(X64) *.d *.db *.log key_iv.bin
 
 ##---------------------------------------------------------------------
 ## Automatic dependencies
