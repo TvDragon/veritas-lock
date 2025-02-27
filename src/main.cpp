@@ -6,6 +6,25 @@
 #include "view/add_login_view.h"
 #include "view/trash_logins_view.h"
 
+#include <iostream>
+#include <unistd.h>
+#include <limits.h>
+
+std::string getAppImagePath() {
+    char result[PATH_MAX];
+    ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+    return (count != -1) ? std::string(result, count) : "";
+}
+
+std::string getResourcePath(const std::string& relativePath) {
+    std::string appPath = getAppImagePath();
+    size_t lastSlash = appPath.find_last_of('/');
+    if (lastSlash != std::string::npos) {
+        return appPath.substr(0, lastSlash) + "/" + relativePath;
+    }
+    return relativePath; // Fallback if path extraction fails
+}
+
 int main(int argc, char** argv) {
 	DataHandler dataHandler = DataHandler();
 	DataContext dataContext;
@@ -85,7 +104,8 @@ int main(int argc, char** argv) {
 	//io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != nullptr);
-	io.Fonts->AddFontFromFileTTF("./res/fonts/nourd_regular.ttf", 18.0f);
+	std::string fontPath = getResourcePath("res/fonts/nourd_regular.ttf");
+	io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 18.0f);
 
 
 	colors[ImGuiCol_Text] = ImColor(28, 35, 33);
