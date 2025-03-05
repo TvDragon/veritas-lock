@@ -27,19 +27,19 @@ enum SubView {
 };
 
 struct DataContext {
-	View view = MASTER_LOGIN_DISPLAY_VIEW;
-	SubView subView = NO_DISPLAY_VIEW;
-	std::map<std::string, std::string> selectedLogin;
-	bool isInitialEdit = false;
-	int selectedLoginIdx = -1;
 	char accountBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
 	char typeBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
 	char usernameBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
 	char emailBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
 	char passwordBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
+	char userBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
 	char websiteBuff[WEBSITE_MAX_LENGTH] = "";
 	char notesBuff[NOTES_MAX_LENGTH] = "";
-	char userBuff[DEFAULT_LOGINS_MAX_LENGTH] = "";
+	View view = MASTER_LOGIN_DISPLAY_VIEW;
+	SubView subView = NO_DISPLAY_VIEW;
+	short selectedLoginIdx = -1;
+	bool isInitialEdit = false;
+	std::map<std::string, std::string> selectedLogin;
 };
 
 #endif
