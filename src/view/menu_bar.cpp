@@ -64,14 +64,14 @@ void MenuBar::DisplayMenuBar() {
 				m_fileDialogOpen = true;
 				m_fileDialogInfo.type = ImGuiFileDialogType_ReadFile;
 				m_fileDialogInfo.title = "Import Logins";
-				m_fileDialogInfo.fileName = "sample-logins.json";
+				m_fileDialogInfo.fileName = "sample-logins.csv";
 				m_fileDialogInfo.directoryPath = std::filesystem::current_path();
 			}
 			if (ImGui::MenuItem("Export")) {
 				m_fileDialogOpen = true;
 				m_fileDialogInfo.type = ImGuiFileDialogType_WriteFile;
 				m_fileDialogInfo.title = "Export Logins";
-				m_fileDialogInfo.fileName = "logins.json";
+				m_fileDialogInfo.fileName = "logins.csv";
 				m_fileDialogInfo.directoryPath = std::filesystem::current_path();
 			}
 			ImGui::EndMenu();
@@ -85,13 +85,13 @@ void MenuBar::DisplayMenuBar() {
 	if (ImGui::FileDialog(&m_fileDialogOpen, &m_fileDialogInfo)) {
 		// Result path in: m_fileDialogInfo.resultPath
 
-		if (m_fileDialogInfo.resultPath.extension() == ".json") {
+		if (m_fileDialogInfo.resultPath.extension() == ".csv") {
 			if (m_fileDialogInfo.type == ImGuiFileDialogType_ReadFile) {
 				std::vector<std::vector<std::string>> logins;
 				int numLogins = 0;
 				errorLogins.clear();
 				failedReadLogins.clear();
-				ReadFile(m_fileDialogInfo.resultPath, logins, failedReadLogins);
+				ReadCSVFile(m_fileDialogInfo.resultPath, logins, failedReadLogins);
 				numLogins = logins.size();
 				for (int i = 0; i < numLogins; i++) {
 					std::string output = ptrDataHandler->AddLogin(logins[i][0],
@@ -113,7 +113,7 @@ void MenuBar::DisplayMenuBar() {
 				}
 			} else if (m_fileDialogInfo.type == ImGuiFileDialogType_WriteFile) {
 				std::vector<std::map<std::string, std::string>> allLogins = ptrDataHandler->GetAllLogins();
-				bool success = WriteToFile(m_fileDialogInfo.resultPath, allLogins);
+				bool success = WriteToCSVFile(m_fileDialogInfo.resultPath, allLogins);
 				if (success) {
 					ImGui::OpenPopup("Export Logins Success");
 				} else {
@@ -177,7 +177,7 @@ void MenuBar::DisplayMenuBar() {
 		}
 		ImGui::EndPopup();
 	} else if (ImGui::BeginPopupModal("Wrong File Type", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-		ImGui::Text("Failed to import logins as must be JSON file type.");
+		ImGui::Text("Failed to import/export logins as must be CSV file type.");
 
 		// Set button width to match modal with
 		float buttonWidth = ImGui::GetContentRegionAvail().x;

@@ -8,8 +8,8 @@ imgui*.ini
 # Database
 *.db
 
-# Logins in JSON file
-*.json
+# Logins in CSV file
+*.csv
 
 # Log files
 *.log
