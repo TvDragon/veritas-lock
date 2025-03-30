@@ -21,7 +21,7 @@ CXX = g++
 CXX_FLAGS = -std=c++17
 # Uncomment the following line to enable logging of database calls
 #CXX_FLAGS += -DDEBUG
-DATA_HANDLER_FLAGS = -lsqlite3 -ljson-c -lcrypto
+DATA_HANDLER_FLAGS = -lsqlite3 -lcrypto
 IMGUI_FLAGS = -I$(IMGUI_DIR)
 LIBS =
 
