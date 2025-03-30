@@ -27,7 +27,17 @@ void ReadCSVFile(const std::string filename, std::vector<std::vector<std::string
 	// Read character line by line to get row for login
 	while (ifs.get(ch)) {
 		if (ch == ',') {
-			login.push_back(ss.str());
+			if (colIdx == 6) {	// Notes which have spaces in them will be enclosed by quotation marks
+				std::string notes = ss.str();
+				if (notes.length() > 2) {
+					if (notes[0] == '"' && notes[notes.length() - 1] == '"') {
+						notes = notes.substr(1, notes.length() - 2);
+					}
+				}
+				login.push_back(notes);
+			} else {
+				login.push_back(ss.str());
+			}
 			ss.str("");
 			colIdx++;
 			if (colIdx == numCols) {	// Retrieve last column info
