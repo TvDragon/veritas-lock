@@ -86,40 +86,17 @@ Note: The package manager you use will be different depending on which linux sys
 ### 9) Multiple Groups
 ![multiple-groups](./screenshot-views/multiple-groups.png)
 
-## Sample of JSON file containing login details to import in application
+## Sample of CSV file containing login details to import in application
 
-		[
-			{
-				"account": "Google",
-				"type": "personal",
-				"username": "johnsmith",
-				"email": "johnsmith@gmail.com",
-				"password": "P@ssw0rd123",
-				"notes": "Primary email account",
-				"website": "https://www.google.com/intl/en-US/gmail/about/",
-				"user": "John Smith"
-			},
-			{
-				"account": "Microsoft",
-				"type": "work",
-				"email": "john.smith@company.com",
-				"username": "jsmith",
-				"password": "SecurePass!456",
-				"notes": "Work account",
-				"website": "https://login.microsoftonline.com/",
-				"user": "John Smith"
-			},
-			{
-				"account": "Facebook",
-				"type": "personal",
-				"username": "janedoe91",
-				"email": "janedoe91@hotmail.com",
-				"password": "FbSecure987",
-				"notes": "Social media account",
-				"website": "https://www.facebook.com/",
-				"user": "Jane Doe"
-			}
-		]
+	account,type,username,email,password,notes,website,user
+	Google,personal,johnsmith,johnsmith@gmail.com,P@ssw0rd123,"Primary email account",https://www.google.com/intl/en-US/gmail/about/,John Smith
+	Microsoft,work,jsmith,john.smith@company.com,SecurePass!456,"Work account",https://login.microsoftonline.com/,John Smith
+	Facebook,personal,janedoe91,janedoe91@hotmail.com,FbSecure987,"Social media account",https://www.facebook.com/,Jane Doe
+
+
+### Limitations
+
+Using login details with commas `,` will make importing and exporting CSV files not possible as the application is set to use commas as the delimiter.
 
 [C++]: https://img.shields.io/badge/C++-FFFFFF?style=for-the-badge&logo=cplusplus&logoColor=00599C
 [cplusplus-url]: https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download
